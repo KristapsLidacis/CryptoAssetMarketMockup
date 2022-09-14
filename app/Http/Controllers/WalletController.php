@@ -19,7 +19,7 @@ class WalletController extends Controller
         $this->userService = $userService;
     }
 
-    //Parāda visus lietotāja wallet datus
+    //Show all information about users wallet
     public function index(): Factory|View|Application
     {
         if (!auth()->id()) {
@@ -29,19 +29,20 @@ class WalletController extends Controller
         return view('wallet', ['cryptoAssetUser' => $cryptoAssetUserResponse[0]]);
     }
 
-    //Parāda buy logu
+    //Opens buy view
     public function buy(CryptoAsset $cryptoAsset)
     {
         return view('buy', ['cryptoAsset' => $cryptoAsset]);
     }
 
-    //Parāda sell logu
+    //Opens sell view
     public function sell(CryptoAsset $cryptoAsset)
     {
 
         return view('sell', ['cryptoAsset' => $cryptoAsset]);
     }
 
+    //Favorites crypto asset
     public function favorite(CryptoAssetUser $cryptoAssetUser)
     {
         dispatch(new UpdateCryptoAssetUserTableJob($cryptoAssetUser));

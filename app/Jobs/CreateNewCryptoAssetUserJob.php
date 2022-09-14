@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\CryptoAssetUser;
+use Carbon\Carbon;
 
 class CreateNewCryptoAssetUserJob
 {
@@ -17,6 +18,7 @@ class CreateNewCryptoAssetUserJob
     {
         $cryptoAssetUser = new CryptoAssetUser([
             'owned' => $this->request->getOwned(),
+            'favorited_at' => Carbon::now('UTC')
         ]);
         $cryptoAssetUser->cryptoAsset()->associate($this->request->getCryptoAsset());
         $cryptoAssetUser->user()->associate(auth()->id());

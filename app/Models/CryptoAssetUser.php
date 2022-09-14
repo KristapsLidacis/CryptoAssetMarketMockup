@@ -24,7 +24,6 @@ class CryptoAssetUser extends Model
         return $this->belongsTo(CryptoAsset::class);
     }
 
-
     public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);

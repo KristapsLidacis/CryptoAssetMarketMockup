@@ -4,8 +4,6 @@ namespace App\Jobs;
 
 use App\Models\CryptoAsset;
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use function PHPUnit\Framework\throwException;
 
 class CreateNewTransactionRecordJobRequest
 {
@@ -64,8 +62,9 @@ class CreateNewTransactionRecordJobRequest
         }
 
         $asset = auth()->user()->cryptoAssets()->where('crypto_asset_id', '=', $this->cryptoAsset->id)->get();
-        if ($asset[0]->pivot->owned <= $this->quantity) {
-            dd('error');
+        if ($asset[0]->pivot->owned < $this->quantity) {
+            dd("you don't own so much crypto!");
+            //Should implement throw/exception
         }
 
         $fields = [

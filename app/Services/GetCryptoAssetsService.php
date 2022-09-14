@@ -9,8 +9,6 @@ class GetCryptoAssetsService
 {
     public function execute(): Collection
     {
-        //->filter(request(['search']))
-        //->paginate(10)
         return CryptoAsset::all();
     }
 }

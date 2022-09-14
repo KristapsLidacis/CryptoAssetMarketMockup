@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Jobs\UpdateCryptoAssetsTableJob;
-use Psy\Command\Command;
+use Illuminate\Console\Command;
 
 class  UpdateCryptoAssetsTableCommand extends Command
 {

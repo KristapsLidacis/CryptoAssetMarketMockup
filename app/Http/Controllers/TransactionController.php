@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\CreateNewTransactionRecordJob;
 use App\Jobs\CreateNewTransactionRecordJobRequest;
 use App\Models\CryptoAsset;
-use App\Models\CryptoAssetUser;
 use App\Services\GetUserTransactionsService;
-use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -22,20 +20,25 @@ class TransactionController extends Controller
         $this->getUserTransactionsService = $getUserTransactionsService;
     }
 
-    //parāda vēsturi visām lietotāja transakcijām
+    //Show history of all user transactions
     public function index(): Factory|View|Application
     {
         return view('transactions', ['transactions' => $this->getUserTransactionsService->execute()]);
     }
 
+    //Creates new transaction log in Data base
     public function store(CryptoAsset $cryptoAsset, Request $request)
     {
-        //jāpievieno validation
+        $fields = $request->validate([
+            'transactionType' => 'required',
+            'quantity' => 'required'
+        ]);
+
         dispatch(new CreateNewTransactionRecordJob(new CreateNewTransactionRecordJobRequest(
             $request->user(),
             $cryptoAsset,
-            $request->get('transactionType'),
-            $request->get('quantity'),
+            $fields['transactionType'],
+            $fields['quantity']
         )));
 
 

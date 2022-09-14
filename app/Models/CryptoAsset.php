@@ -19,16 +19,11 @@ class CryptoAsset extends Model
         'change_last_day',
         'change_last_week',
         'icon_path'
-        ];
+    ];
 
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
-    }
-
-    public function cryptoAssetUser(): BelongsToMany
-    {
-        return $this->belongsToMany(CryptoAssetUser::class);
     }
 
 }

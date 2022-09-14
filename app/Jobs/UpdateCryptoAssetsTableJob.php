@@ -5,18 +5,19 @@ namespace App\Jobs;
 use App\Models\CryptoAsset;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Http;$cryptoAssetUser
-$cryptoAssetUser
+use Illuminate\Support\Facades\Http;
+
 class UpdateCryptoAssetsTableJob implements ShouldQueue
 {
     use Dispatchable;
     public function handle()
     {
+        $limit = CryptoAsset::all();
         $response = Http::withHeaders([
             "x-messari-api-key" => getenv('MESSARI_API_KEY')
         ])
             ->get(getenv('MESSARI_BASE_URL'), [
-                'limit' => 30
+                'limit' => count($limit)
             ])->json();
 
         foreach ($response['data'] as $data){

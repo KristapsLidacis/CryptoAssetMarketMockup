@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\GetCryptoAssetsJob;
-use App\Jobs\UpdateCryptoAssetsTableJob;
 use App\Models\CryptoAsset;
 use App\Services\GetCryptoAssetsService;
 use Illuminate\Contracts\Foundation\Application;
@@ -19,7 +17,7 @@ class CryptoAssetController extends Controller
         $this->getCryptoAssetsService = $getCryptoAssetsService;
     }
 
-    //Parāda visas kriptovalūtas
+    //Show all cryptocurrencies from Database
     public function index(): Factory|View|Application
     {
         return view('home', [
@@ -27,21 +25,7 @@ class CryptoAssetController extends Controller
         ]);
     }
 
-    //Atjaunina datubāzē esošos datus
-    public function update(): void
-    {
-        dispatch(new UpdateCryptoAssetsTableJob());
-        redirect('/');
-    }
-
-    //Saglabā datubāzē visus datus
-    public function store(): void
-    {
-        dispatch(new GetCryptoAssetsJob);
-        redirect('/');
-    }
-
-    //Parāda individuālu kripto valūtu
+    //Show individual information about cryptocurrency
     public function show(CryptoAsset $cryptoAsset): Factory|View|Application
     {
         return view('show', ['cryptoAsset' => $cryptoAsset]);
