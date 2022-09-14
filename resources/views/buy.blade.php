@@ -1,19 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
     </x-slot>
-
-    <h1>Buy {{ $cryptoAsset->name }}</h1>
-    <form method="POST" action="/transactions/{{ $cryptoAsset->id }}/buy">
-        @csrf
-        <input type="hidden" name="transactionType" value="buy">
-        <label for="quantity">Quantity</label>
-        <input id="quantity" type="text" name="quantity"/>
-        <span>{{  number_format($cryptoAsset->price_usd_pennies / 1000, 3, '.', '') }}</span>
-        <button type="submit">Submit</button>
-    </form>
-
-
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

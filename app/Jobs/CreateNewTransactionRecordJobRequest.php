@@ -48,7 +48,7 @@ class CreateNewTransactionRecordJobRequest
             $asset = auth()->user()->cryptoAssets()->where('crypto_asset_id', '=', $this->cryptoAsset->id)->get();
             if (count($asset) < 1) {
                 dispatch(new CreateNewCryptoAssetUserJob(new CreateNewCryptoAssetUserJobRequest(
-                    $this->quantity,
+                    $this->quantity*1000,
                     $this->cryptoAsset,
                 )));
                 $asset = auth()->user()->cryptoAssets()->where('crypto_asset_id', '=', $this->cryptoAsset->id)->get();
@@ -56,14 +56,14 @@ class CreateNewTransactionRecordJobRequest
             }
 
             $fields = [
-                'owned' => $asset[0]->pivot->owned + $this->quantity,
+                'owned' => $asset[0]->pivot->owned + ($this->quantity*1000),
             ];
             $asset[0]->pivot->update($fields);
             return $asset[0]->pivot;
         }
 
         $asset = auth()->user()->cryptoAssets()->where('crypto_asset_id', '=', $this->cryptoAsset->id)->get();
-        $sold = $asset[0]->pivot->owned - $this->quantity;
+        $sold = ($asset[0]->pivot->owned /1000 ) - $this->quantity;
         if ($sold < 0) {
             dd("you don't own so much crypto!");
             //Should implement throw/exception
@@ -71,13 +71,13 @@ class CreateNewTransactionRecordJobRequest
 
         if(!is_null($asset[0]->pivot->favorited_at) || $sold != 0){
             $fields = [
-                'owned' => $asset[0]->pivot->owned - $this->quantity,
+                'owned' => $sold * 1000,
             ];
             $asset[0]->pivot->update($fields);
             return $asset[0]->pivot;
         }
 
-        $asset[0]->pivot->delete();
+       // $asset[0]->pivot->delete();
         return null;
     }
 

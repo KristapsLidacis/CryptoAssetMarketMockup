@@ -22,13 +22,16 @@ class CreateNewTransactionRecordJob implements ShouldQueue
 
     public function handle()
     {
-        $transaction = new Transaction([
-            'crypto_asset_user_id' => $this->request->getCryptoAssetUser()->crypto_asset_id,
-            'transaction_type' => $this->request->getTransactionType(),
-            'description' => $this->request->getDescription(),
-            'price' => $this->request->getPrice(),
-            'quantity' => $this->request->getQuantity(),
-        ]);
-        $transaction->save();
+
+            $transaction = new Transaction([
+                'crypto_asset_user_id' => $this->request->getCryptoAssetUser()->crypto_asset_id,
+                'transaction_type' => $this->request->getTransactionType(),
+                'description' => $this->request->getDescription(),
+                'price' => $this->request->getPrice(),
+                'quantity' => $this->request->getQuantity(),
+            ]);
+            $transaction->save();
+
+
     }
 }

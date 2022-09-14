@@ -67,7 +67,7 @@
                                     <td class="py-3 px-6 text-left">
                                         <div class="flex items-center">
                                             @if(!is_null($cryptoAsset->pivot->owned))
-                                                <span>{{ number_format($cryptoAsset->pivot->owned, 3, '.', '') }}</span>
+                                                <span>{{ number_format($cryptoAsset->pivot->owned /1000, 3, '.', '') }}</span>
                                             @else
                                                 <span>0</span>
                                             @endif
