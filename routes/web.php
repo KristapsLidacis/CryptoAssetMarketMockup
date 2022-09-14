@@ -15,15 +15,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Test CryptoAsset store function
-Route::get('/store', [CryptoAssetController::class, 'store']);
-//Test CryptoAsset update function
-Route::get('/update', [CryptoAssetController::class, 'update']);
-
 
 //CryptoAssets controller
-Route::get('/', [CryptoAssetController::class, 'index'])
-    ->name('default')->middleware('auth');
+Route::get('/', function (){
+    return view('welcome');
+});
 
 Route::get('/home', [CryptoAssetController::class, 'index'])
     ->name('home')->middleware('auth');

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CryptoAssetUser extends Model
 {
+
     protected $table = 'crypto_asset_user';
     protected $fillable = [
         'favorited_at',

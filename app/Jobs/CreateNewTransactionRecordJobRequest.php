@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\CryptoAsset;
+use App\Models\CryptoAssetUser;
 use App\Models\User;
 
 class CreateNewTransactionRecordJobRequest
@@ -11,9 +12,9 @@ class CreateNewTransactionRecordJobRequest
     private User $user;
     private CryptoAsset $cryptoAsset;
     private string $transactionType;
-    private int $quantity;
+    private float $quantity;
 
-    public function __construct(User $user, CryptoAsset $cryptoAsset, string $transactionType, int $quantity)
+    public function __construct(User $user, CryptoAsset $cryptoAsset, string $transactionType, float $quantity)
     {
         $this->user = $user;
         $this->cryptoAsset = $cryptoAsset;
@@ -62,16 +63,22 @@ class CreateNewTransactionRecordJobRequest
         }
 
         $asset = auth()->user()->cryptoAssets()->where('crypto_asset_id', '=', $this->cryptoAsset->id)->get();
-        if ($asset[0]->pivot->owned < $this->quantity) {
+        $sold = $asset[0]->pivot->owned - $this->quantity;
+        if ($sold < 0) {
             dd("you don't own so much crypto!");
             //Should implement throw/exception
         }
 
-        $fields = [
-            'owned' => $asset[0]->pivot->owned - $this->quantity,
-        ];
-        $asset[0]->pivot->update($fields);
-        return $asset[0]->pivot;
+        if(!is_null($asset[0]->pivot->favorited_at) || $sold != 0){
+            $fields = [
+                'owned' => $asset[0]->pivot->owned - $this->quantity,
+            ];
+            $asset[0]->pivot->update($fields);
+            return $asset[0]->pivot;
+        }
+
+        $asset[0]->pivot->delete();
+        return null;
     }
 
     public function getTransactionType(): string

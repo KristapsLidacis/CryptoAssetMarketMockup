@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Jobs\GetNews;
+use App\Http\Controllers\NewsController;
 use App\Services\GetNewsService;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,7 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-//        $news = new GetNewsService();
-//        View::share('news', $news->execute());
+        $test = new GetNewsService();
+
+        View::share('news', $test->execute());
     }
 }
