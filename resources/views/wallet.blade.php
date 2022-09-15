@@ -8,7 +8,7 @@
                 <div class="p-6 bg-white border-b border-gray-200"
                      style="display: flex; justify-items: center; align-content: space-evenly">
                     <div>
-                        <h1 class="text-2xl text-gray-800 font-bold align-middle">{{ Auth::user()->name }} wallet</h1>
+                        <h1 class="text-2xl text-gray-800 font-bold align-middle"> wallet</h1>
 
                         <table class="min-w-max w-full table-auto">
                             <thead>

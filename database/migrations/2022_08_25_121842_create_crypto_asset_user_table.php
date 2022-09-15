@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->decimal('owned')->nullable();
             $table->timestamp('favorited_at')->nullable();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
 
             $table->foreign('crypto_asset_id')->references('id')->on('crypto_assets');

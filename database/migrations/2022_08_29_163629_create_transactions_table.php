@@ -21,7 +21,7 @@ return new class extends Migration
             $table->bigInteger('quantity');
             $table->timestamps();
 
-            $table->foreign('crypto_asset_user_id')->references('id')->on('crypto_asset_user');
+            $table->foreign('crypto_asset_user_id')->references('id')->on('crypto_asset_user')->cascadeOnDelete();
         });
     }
 

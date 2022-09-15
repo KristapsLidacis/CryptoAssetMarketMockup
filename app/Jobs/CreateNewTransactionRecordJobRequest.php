@@ -77,8 +77,8 @@ class CreateNewTransactionRecordJobRequest
             return $asset[0]->pivot;
         }
 
-       // $asset[0]->pivot->delete();
-        return null;
+        $asset[0]->pivot->delete();
+        return $asset[0]->pivot;
     }
 
     public function getTransactionType(): string
