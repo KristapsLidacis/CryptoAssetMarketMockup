@@ -77,7 +77,6 @@ class CreateNewTransactionRecordJobRequest
             return $asset[0]->pivot;
         }
 
-        $asset[0]->pivot->delete();
         return $asset[0]->pivot;
     }
 
